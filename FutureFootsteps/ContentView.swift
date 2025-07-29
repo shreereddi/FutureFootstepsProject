@@ -17,9 +17,9 @@ struct ContentView: View {
         NavigationStack{
             VStack{
                 HStack{
-                    Text("Sustainability Checklist")
-                        .font(.system(size: 40))
-                        .fontWeight(.black)
+                    Text("\(name)'s Sustainability Checklist")
+                        .font(.system(size: 30))
+                        .fontWeight(.bold)
                     Spacer()
                     NavigationLink(destination: NewToDoView(showNewTask: .constant(false), toDoItem: ToDoItem(title: "", isImportant: false))) {
                         Text("+")
