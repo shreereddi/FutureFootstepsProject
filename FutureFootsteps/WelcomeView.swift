@@ -57,7 +57,7 @@ struct WelcomeView: View {
                     
                 }
                 .navigationDestination(isPresented: $navigateToGoal) {
-                    GoalSettingView(name: name)
+                    IntroductionView(name: name)
                         .navigationBarBackButtonHidden(true)
                 }
             }
