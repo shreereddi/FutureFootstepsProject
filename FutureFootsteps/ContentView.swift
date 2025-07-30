@@ -20,7 +20,7 @@ struct ContentView: View {
                         .font(.system(size: 40))
                         .fontWeight(.black)
                     Spacer()
-                    NavigationLink(destination: NewToDoView(showNewTask: .constant(false), toDoItem: ToDoItem(title: "", isImportant: false))) {
+                    NavigationLink(destination: NewToDoView(showNewTask: .constant(false), toDoItem: ToDoItem(title: "", isImportant: false, date: Date()))) {
                         Text("+")
                         
                     }
@@ -33,9 +33,12 @@ struct ContentView: View {
                 List{
                     ForEach(toDos){ toDoItem in
                         if toDoItem.isImportant {
-                            Text("‼️" + toDoItem.title)
+                            Text("‼️ \(toDoItem.title) \(toDoItem.date.formatted(.dateTime.month().day().year()))")
+
+                           
                         } else {
-                            Text(toDoItem.title)
+                            Text("\(toDoItem.title) \(toDoItem.date.formatted(.dateTime.month().day().year()))")
+
                         }
                     }
                     .onDelete(perform: deleteToDo)
@@ -45,7 +48,7 @@ struct ContentView: View {
                 
             }
             if showNewTask {
-                NewToDoView(showNewTask: $showNewTask, toDoItem: ToDoItem(title: "", isImportant: false))
+                NewToDoView(showNewTask: $showNewTask, toDoItem: ToDoItem(title: "", isImportant: false, date: Date()))
             }
             Spacer()
         }
