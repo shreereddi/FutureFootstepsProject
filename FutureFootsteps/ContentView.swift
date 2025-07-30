@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    let name: String
     @State private var showNewTask = false
     @Query var toDos: [ToDoItem]
     @Environment(\.modelContext) var modelContext
@@ -16,9 +17,9 @@ struct ContentView: View {
         NavigationStack{
             VStack{
                 HStack{
-                    Text("Sustainability Checklist")
-                        .font(.system(size: 40))
-                        .fontWeight(.black)
+                    Text("\(name)'s Sustainability Checklist")
+                        .font(.system(size: 30))
+                        .fontWeight(.bold)
                     Spacer()
                     NavigationLink(destination: NewToDoView(showNewTask: .constant(false), toDoItem: ToDoItem(title: "", isImportant: false, date: Date()))) {
                         Text("+")
@@ -52,6 +53,7 @@ struct ContentView: View {
             }
             Spacer()
         }
+        .navigationBarBackButtonHidden(true)
         }
         func deleteToDo(at offsets: IndexSet) {
             for offset in offsets {
@@ -62,7 +64,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(name: "")
         .modelContainer(for: ToDoItem.self, inMemory: true)
 
 }
