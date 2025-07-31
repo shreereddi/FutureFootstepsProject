@@ -12,7 +12,7 @@ import SwiftData
 struct ToDoListApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(name: "")
+            WelcomeView()
                 .modelContainer(for: ToDoItem.self)
         }
     }

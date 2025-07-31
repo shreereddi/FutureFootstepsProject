@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
+
 
 struct IntroductionView: View {
     let name: String
     
     var body: some View {
-        NavigationStack {
             ZStack {
                 /*@START_MENU_TOKEN@*/Color(red: 0.857, green: 0.912, blue: 0.732)/*@END_MENU_TOKEN@*/
                     .edgesIgnoringSafeArea(.all)
@@ -49,7 +50,6 @@ struct IntroductionView: View {
             }
         }
     }
-}
 
 #Preview {
     IntroductionView(name: "Name")

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WelcomeView: View {
     @State private var name: String = ""

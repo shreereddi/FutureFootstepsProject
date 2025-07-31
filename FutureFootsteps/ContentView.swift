@@ -11,21 +11,33 @@ import SwiftData
 struct ContentView: View {
     let name: String
     @State private var showNewTask = false
+    @State private var navigateToNewTask = false
+    @State private var newToDoItem = ToDoItem(title: "", isImportant: false, date: Date())
     @Query var toDos: [ToDoItem]
     @Environment(\.modelContext) var modelContext
     var body: some View {
-        NavigationStack{
+
             VStack{
                 HStack{
                     Text("\(name)'s Sustainability Checklist")
                         .font(.system(size: 30))
                         .fontWeight(.bold)
                     Spacer()
-                    NavigationLink(destination: NewToDoView(showNewTask: .constant(false), toDoItem: ToDoItem(title: "", isImportant: false, date: Date()))) {
+                    /*NavigationLink(destination: NewToDoView(showNewTask: .constant(false), toDoItem: ToDoItem(title: "", isImportant: false, date: Date()))) {
                         Text("+")
                         
                     }
-                    .font(.system(size: 50))
+                    .font(.system(size: 50))*/
+                    NavigationLink(
+                        destination: NewToDoView(
+                            showNewTask: .constant(false), 
+                            toDoItem: ToDoItem(title: "", isImportant: false, date: Date())
+                        )
+                    ) {
+                        Text("+")
+                            .font(.system(size: 50))
+                    }
+
                 }
                 .padding()
                 Spacer()
@@ -39,6 +51,7 @@ struct ContentView: View {
                            
                         } else {
                             Text("\(toDoItem.title) \(toDoItem.date.formatted(.dateTime.month().day().year()))")
+                            
 
                         }
                     }
@@ -52,7 +65,6 @@ struct ContentView: View {
                 NewToDoView(showNewTask: $showNewTask, toDoItem: ToDoItem(title: "", isImportant: false, date: Date()))
             }
             Spacer()
-        }
         .navigationBarBackButtonHidden(true)
         }
         func deleteToDo(at offsets: IndexSet) {
@@ -64,7 +76,8 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(name: "")
-        .modelContainer(for: ToDoItem.self, inMemory: true)
+        ContentView(name: "")
+            .modelContainer(for: ToDoItem.self)
+
 
 }
