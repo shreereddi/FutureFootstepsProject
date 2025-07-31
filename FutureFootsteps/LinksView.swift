@@ -22,7 +22,10 @@ struct LinksView: View {
                     .foregroundColor(Color(red: 0.406, green: 0.477, blue: 0.261))
                 
                 Group{
-                    Text("Want to learn about Sustainability? click the link below ")
+                    VStack {
+                        Text("Want to learn about Sustainability?")
+                        Text("Click the link below.")
+                    }
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
@@ -41,9 +44,12 @@ struct LinksView: View {
                         .frame(width: 300, height: 200)
                         
                 }
-                
+                Divider()
                 Group{
-                    Text("Want to learn about Water Sustainability? click the link below ")
+                    VStack {
+                        Text("Want to learn about Water Sustainability?")
+                        Text("Click the link below.")
+                    }
                         .fontWeight(.medium)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
