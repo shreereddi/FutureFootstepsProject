@@ -27,9 +27,7 @@ struct ChecklistCategory: Identifiable {
 
 struct ContentView: View {
     let name: String
-    @State private var showNewTask = false
-    @Query var toDos: [ToDoItem]
-    @Environment(\.modelContext) var modelContext
+  
 
     @State private var checklistCategories: [ChecklistCategory] = [
         ChecklistCategory(title: "Energy Use", items: [
@@ -64,16 +62,25 @@ struct ContentView: View {
         NavigationStack {
             List {
                 Section {
-                    Text("\(name)'s Sustainability Checklist")
-                        .font(.system(size: 30))
-                        .fontWeight(.bold)
-                        .foregroundColor(/*@START_MENU_TOKEN@*/Color(red: 0.406, green: 0.477, blue: 0.261)/*@END_MENU_TOKEN@*/)
-                }
-                .listRowBackground(Color(red: 0.87, green: 0.92, blue: 0.87))
+                  
+                    HStack{
+                        Text("\(name)'s Sustainability Checklist")
+                            .font(.system(size: 30))
+                            .fontWeight(.bold)
+                            .padding()
+                    }
+                    .listRowBackground(Color.clear)
                     
+                    NavigationLink(destination: Facts()) {
+                        Text("Want to learn more about sustainability?")
+                    }
+          
+                    
+                }
                         ForEach($checklistCategories) { $category in
                             Section(header: Text(category.title)
                                 .font(.headline)
+
                                 .padding(.vertical, 10)
                                 .padding(.horizontal, 5)
                                 .background(Color(red: 0.87, green: 0.92, blue: 0.87))
@@ -118,6 +125,5 @@ struct ChecklistRow: View {
 
 #Preview {
     ContentView(name: "Name")
-        .modelContainer(for: ToDoItem.self, inMemory: true)
 
 }
