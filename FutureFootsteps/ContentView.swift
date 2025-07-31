@@ -27,7 +27,7 @@ struct ChecklistCategory: Identifiable {
 
 struct ContentView: View {
     let name: String
-  
+    @State private var goalCounter: Int = 0
 
     @State private var checklistCategories: [ChecklistCategory] = [
         ChecklistCategory(title: "Energy Use", items: [
@@ -67,16 +67,42 @@ struct ContentView: View {
                         Text("\(name)'s Sustainability Checklist")
                             .font(.system(size: 30))
                             .fontWeight(.bold)
-                            .padding()
+                            .foregroundColor(Color(red: 0.406, green: 0.477, blue: 0.261))
                     }
-                    .listRowBackground(Color.clear)
+                    .listRowBackground(Color(red: 0.87, green: 0.92, blue: 0.87))
                     
                     NavigationLink(destination: Facts()) {
                         Text("Want to learn more about sustainability?")
+                            .font(.footnote)
+                            .fontWeight(.light)
+                            
                     }
           
                     
-                }
+                }.listRowBackground(Color(red: 0.87, green: 0.92, blue: 0.87))
+                
+                VStack(alignment: .center) {
+                        if goalCounter == 1 {
+                            Text("You have completed \(goalCounter) action.")
+                                .fontWeight(.bold)
+                        } else {
+                            Text("You have completed \(goalCounter) actions.")
+                                .fontWeight(.bold)
+                        }
+                        Spacer()
+                            .frame(height: 10)
+                        if goalCounter < 3 {
+                            Text("Keep going! Let's make a positive impact today.")
+                        } else {
+                            Text("Keep up the good work! You're making a real difference.")
+                        }
+                    }
+                            .frame(maxWidth: .infinity)
+                            .listRowBackground(Color.clear)
+                            .foregroundColor(Color(red: 0.406, green: 0.477, blue: 0.261))
+                            .multilineTextAlignment(.center)
+                
+                
                         ForEach($checklistCategories) { $category in
                             Section(header: Text(category.title)
                                 .font(.headline)
@@ -87,7 +113,7 @@ struct ContentView: View {
                                 .cornerRadius(10)
                                 .foregroundColor(/*@START_MENU_TOKEN@*/Color(red: 0.406, green: 0.477, blue: 0.261)/*@END_MENU_TOKEN@*/)) {
                                         ForEach($category.items) { $item in
-                                            ChecklistRow(item: $item)
+                                            ChecklistRow(item: $item, goalCounter: $goalCounter)
                                                 
                                         }
                                     }
@@ -106,11 +132,18 @@ struct ContentView: View {
 
 struct ChecklistRow: View {
     @Binding var item: ChecklistItem
+    @Binding var goalCounter: Int
     
     var body: some View {
             HStack {
                 Button(action: {
+                    if item.isChecked {
+                        goalCounter -= 1
+                    } else {
+                        goalCounter += 1
+                    }
                     item.isChecked.toggle()
+
                 }) {
                     Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(item.isChecked ? Color(red: 0.406, green: 0.477, blue: 0.261) : .gray)
