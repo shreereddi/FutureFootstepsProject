@@ -13,6 +13,7 @@ struct ToDoListApp: App {
     var body: some Scene {
         WindowGroup {
             WelcomeView()
+                .modelContainer(for: [UserSession.self])
         }
     }
 }
