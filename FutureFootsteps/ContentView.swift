@@ -60,31 +60,35 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        NavigationStack{
-            ScrollView {
-                
-                Text("\(name)'s Sustainability Checklist")
-                    .font(.system(size: 30))
-                    .fontWeight(.bold)
-                    .padding()
+        
+        NavigationStack {
+            List {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("\(name)'s Sustainability Checklist")
+                        .font(.system(size: 30))
+                        .fontWeight(.bold)
+                        .padding()
                     
-                    ForEach($checklistCategories) { $category in
-                        VStack(alignment: .leading, spacing: 7) {
-                            Text(category.title)
-                                .font(.headline)
-                                .padding(.bottom, 4)
-                            ForEach($category.items) { $item in
-                                ChecklistRow(item: $item)
+                    
+                        ForEach($checklistCategories) { $category in
+                            VStack(alignment: .leading, spacing: 7) {
+                                Text(category.title)
+                                    .font(.headline)
+                                    .padding(.bottom, 4)
+                                ForEach($category.items) { $item in
+                                    ChecklistRow(item: $item)
+                                }
                             }
-                                
-                        }
-                        .padding(.leading, 20)
-                        .padding(.top)
-                    }
-            
+                            
+                            .padding(.top)
+                        
+                        
+                        .navigationBarBackButtonHidden(true)
+                        
+                    }.listStyle(.grouped)
+                        .padding(.horizontal)
+                }
             }
-            .navigationBarBackButtonHidden(true)
-            .frame(maxWidth: .infinity)
         }
     }
 }
