@@ -62,6 +62,7 @@ struct ContentView: View {
         NavigationStack {
             List {
                 Section {
+                  
                     HStack{
                         Text("\(name)'s Sustainability Checklist")
                             .font(.system(size: 30))
@@ -73,22 +74,29 @@ struct ContentView: View {
                     NavigationLink(destination: Facts()) {
                         Text("Want to learn more about sustainability?")
                     }
+          
                     
                 }
                         ForEach($checklistCategories) { $category in
                             Section(header: Text(category.title)
                                 .font(.headline)
-                                .foregroundColor(.green)) {
+
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 5)
+                                .background(Color(red: 0.87, green: 0.92, blue: 0.87))
+                                .cornerRadius(10)
+                                .foregroundColor(/*@START_MENU_TOKEN@*/Color(red: 0.406, green: 0.477, blue: 0.261)/*@END_MENU_TOKEN@*/)) {
                                         ForEach($category.items) { $item in
                                             ChecklistRow(item: $item)
+                                                
                                         }
                                     }
                                 }
                         
                     }
-            
-                    .listStyle(.grouped)
-                    .padding(.horizontal)
+                    .background(Color(red: 0.9, green: 0.95, blue: 0.9))
+                    .scrollContentBackground(.hidden)
+                    .listStyle(.insetGrouped)
                     .navigationBarBackButtonHidden(true)
                 }
             }
@@ -105,10 +113,13 @@ struct ChecklistRow: View {
                     item.isChecked.toggle()
                 }) {
                     Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
-                        .foregroundColor(item.isChecked ? .green : .gray)
+                        .foregroundColor(item.isChecked ? Color(red: 0.406, green: 0.477, blue: 0.261) : .gray)
                 }.buttonStyle(PlainButtonStyle())
                 Text(item.title)
+                    .strikethrough(item.isChecked, color: Color(red: 0.406, green: 0.477, blue: 0.261))
+                    .foregroundColor(item.isChecked ? /*@START_MENU_TOKEN@*/Color(red: 0.406, green: 0.477, blue: 0.261)/*@END_MENU_TOKEN@*/ : .black)
             }
+            .animation(.default, value: item.isChecked)
     }
 }
 
