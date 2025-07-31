@@ -17,7 +17,6 @@ struct IntroductionView: View {
     
     var body: some View {
         ZStack {
-            Text("Hi")
             /*@START_MENU_TOKEN@*/Color(red: 0.857, green: 0.912, blue: 0.732)/*@END_MENU_TOKEN@*/
                 .edgesIgnoringSafeArea(.all)
             VStack(spacing: 24) {
