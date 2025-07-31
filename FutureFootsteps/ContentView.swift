@@ -63,35 +63,34 @@ struct ContentView: View {
         
         NavigationStack {
             List {
-                VStack(alignment: .leading, spacing: 20) {
+                Section {
                     Text("\(name)'s Sustainability Checklist")
                         .font(.system(size: 30))
                         .fontWeight(.bold)
                         .padding()
-                    
+                }
+                .listRowBackground(Color.clear)
                     
                         ForEach($checklistCategories) { $category in
-                            VStack(alignment: .leading, spacing: 7) {
-                                Text(category.title)
-                                    .font(.headline)
-                                    .padding(.bottom, 4)
-                                ForEach($category.items) { $item in
-                                    ChecklistRow(item: $item)
+                            Section(header: Text(category.title)
+                                .font(.headline)
+                                .foregroundColor(.green)) {
+                                        ForEach($category.items) { $item in
+                                            ChecklistRow(item: $item)
+                                        }
+                                    }
                                 }
-                            }
-                            
-                            .padding(.top)
                         
-                        
-                        .navigationBarBackButtonHidden(true)
-                        
-                    }.listStyle(.grouped)
-                        .padding(.horizontal)
+                    }
+            
+                    .listStyle(.grouped)
+                    .padding(.horizontal)
+                    .navigationBarBackButtonHidden(true)
                 }
             }
         }
-    }
-}
+    
+
 
 struct ChecklistRow: View {
     @Binding var item: ChecklistItem
