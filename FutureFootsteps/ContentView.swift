@@ -27,11 +27,7 @@ struct ChecklistCategory: Identifiable {
 
 struct ContentView: View {
     let name: String
-    @State private var showNewTask = false
-    @State private var navigateToNewTask = false
-    @State private var newToDoItem = ToDoItem(title: "", isImportant: false, date: Date())
-    @Query var toDos: [ToDoItem]
-    @Environment(\.modelContext) var modelContext
+  
 
     @State private var checklistCategories: [ChecklistCategory] = [
         ChecklistCategory(title: "Energy Use", items: [
@@ -62,89 +58,43 @@ struct ContentView: View {
     ]
     
     var body: some View {
-<<<<<<< HEAD
-
-            VStack{
-                HStack{
-                    Text("\(name)'s Sustainability Checklist")
-                        .font(.system(size: 30))
-                        .fontWeight(.bold)
-                    Spacer()
-                    /*NavigationLink(destination: NewToDoView(showNewTask: .constant(false), toDoItem: ToDoItem(title: "", isImportant: false, date: Date()))) {
-                        Text("+")
-                        
-                    }
-                    .font(.system(size: 50))*/
-                    NavigationLink(
-                        destination: NewToDoView(
-                            showNewTask: .constant(false), 
-                            toDoItem: ToDoItem(title: "", isImportant: false, date: Date())
-                        )
-                    ) {
-                        Text("+")
-                            .font(.system(size: 50))
-                    }
-
-                }
-                .padding()
-                Spacer()
-                
-                
-                List{
-                    ForEach(toDos){ toDoItem in
-                        if toDoItem.isImportant {
-                            Text("‼️ \(toDoItem.title) \(toDoItem.date.formatted(.dateTime.month().day().year()))")
-
-                           
-                        } else {
-                            Text("\(toDoItem.title) \(toDoItem.date.formatted(.dateTime.month().day().year()))")
-                            
-
-                        }
-                    }
-                    .onDelete(perform: deleteToDo)
-=======
         
         NavigationStack {
             List {
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("\(name)'s Sustainability Checklist")
-                        .font(.system(size: 30))
-                        .fontWeight(.bold)
-                        .padding()
+                Section {
+                    HStack{
+                        Text("\(name)'s Sustainability Checklist")
+                            .font(.system(size: 30))
+                            .fontWeight(.bold)
+                            .padding()
+                    }
+                    .listRowBackground(Color.clear)
                     
+                    NavigationLink(destination: Facts()) {
+                        Text("Want to learn more about sustainability?")
+                    }
                     
+                }
                         ForEach($checklistCategories) { $category in
-                            VStack(alignment: .leading, spacing: 7) {
-                                Text(category.title)
-                                    .font(.headline)
-                                    .padding(.bottom, 4)
-                                ForEach($category.items) { $item in
-                                    ChecklistRow(item: $item)
+                            Section(header: Text(category.title)
+                                .font(.headline)
+                                .foregroundColor(.green)) {
+                                        ForEach($category.items) { $item in
+                                            ChecklistRow(item: $item)
+                                        }
+                                    }
                                 }
-                            }
-                            
-                            .padding(.top)
                         
-                        
-                        .navigationBarBackButtonHidden(true)
-                        
-                    }.listStyle(.grouped)
-                        .padding(.horizontal)
->>>>>>> main
+                    }
+            
+                    .listStyle(.grouped)
+                    .padding(.horizontal)
+                    .navigationBarBackButtonHidden(true)
                 }
             }
-<<<<<<< HEAD
-            if showNewTask {
-                NewToDoView(showNewTask: $showNewTask, toDoItem: ToDoItem(title: "", isImportant: false, date: Date()))
-            }
-            Spacer()
-        .navigationBarBackButtonHidden(true)
-=======
->>>>>>> main
         }
-    }
-}
+    
+
 
 struct ChecklistRow: View {
     @Binding var item: ChecklistItem
@@ -163,13 +113,6 @@ struct ChecklistRow: View {
 }
 
 #Preview {
-<<<<<<< HEAD
-        ContentView(name: "")
-            .modelContainer(for: ToDoItem.self)
-
-=======
     ContentView(name: "Name")
-        .modelContainer(for: ToDoItem.self, inMemory: true)
->>>>>>> main
 
 }
